@@ -1,10 +1,13 @@
 package com.example.asus.coolweather.util;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.asus.coolweather.db.City;
 import com.example.asus.coolweather.db.Country;
 import com.example.asus.coolweather.db.Province;
+import com.example.asus.coolweather.gson.Weather;
+import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -64,6 +67,7 @@ public class Utility {
                     Country country = new Country();
                     country.setCountryName(countryObject.getString("name"));
                     country.setWeatherId(countryObject.getString("weather_id"));
+                    country.setCityId(cityId);
                     country.save();
                 }
                 return true;
@@ -72,5 +76,17 @@ public class Utility {
             }
         }
         return false;
+    }
+
+    public static Weather handleWeatherResponse(String response){
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray jsonArray = jsonObject.getJSONArray("HeWeather");
+            String weatherContent = jsonArray.getJSONObject(0).toString();
+            return new Gson().fromJson(weatherContent,Weather.class);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
