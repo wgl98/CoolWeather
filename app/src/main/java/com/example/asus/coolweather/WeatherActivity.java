@@ -150,6 +150,7 @@ public class WeatherActivity extends AppCompatActivity {
                 });
             }
         });
+        loadBingPic();
     }
 
     private void showWeatherInfo(Weather weather){
@@ -182,7 +183,7 @@ public class WeatherActivity extends AppCompatActivity {
         String caeWash = "洗车指数： " + weather.suggestion.carWash.info;
         String sport = "运动建议： " + weather.suggestion.sport.info;
         comfortText.setText(comfort);
-        comfortText.setText(caeWash);
+        carWashText.setText(caeWash);
         sportText.setText(sport);
         weatherLayout.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, AutoUpdateService.class);
